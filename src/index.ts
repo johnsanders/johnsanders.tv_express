@@ -1,10 +1,12 @@
 import express from 'express';
-import http from 'http';
+import { createServer } from 'http';
+import cors from 'cors';
 
 const app = express();
-const server = http.createServer(app);
+const server = createServer(app);
 
-app.use(express.static('/home/cnnitouch/www/johnsanders.tv'));
+app.use(cors());
+app.use('/', express.static('/home/jon13210/www/johnsanders.tv/'));
 
 server.listen(3000, 'localhost');
 server.on('listening', () => {
