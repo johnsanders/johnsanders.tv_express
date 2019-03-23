@@ -2,14 +2,11 @@ import express from 'express';
 import http from 'http';
 
 const app = express();
-const  server = http.createServer(app);
+const server = http.createServer(app);
 
-app.get('/', (req, res) => {
-	res.send("Well hey there.");
-});
+app.use(express.static('/home/cnnitouch/www/johnsanders.tv'));
 
 server.listen(3000, 'localhost');
 server.on('listening', () => {
 	console.log('Server started.');
 });
-
