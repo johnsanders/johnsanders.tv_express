@@ -1,10 +1,9 @@
-
 import mongoose from 'mongoose';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 
-const initUsers = () => {
-	const { Schema  } = mongoose;
+const initUsers = (): void => {
+	const { Schema } = mongoose;
 
 	const UsersSchema = new Schema({
 		email: String,
@@ -28,11 +27,14 @@ const initUsers = () => {
 		const expirationDate = new Date(today);
 		expirationDate.setDate(today.getDate() + 60);
 
-		return jwt.sign({
-			email: this.email,
-			id: this._id,
-			exp: Math.floor(expirationDate.getTime() / 1000),
-		}, 'secret');
+		return jwt.sign(
+			{
+				email: this.email,
+				id: this._id,
+				exp: Math.floor(expirationDate.getTime() / 1000),
+			},
+			'secret',
+		);
 	};
 
 	UsersSchema.methods.toAuthJSON = function() {
@@ -47,4 +49,3 @@ const initUsers = () => {
 };
 
 export default initUsers;
-
