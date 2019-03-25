@@ -5,7 +5,6 @@ const getTokenFromHeaders = (req: express.Request): string => {
 	const {
 		headers: { authorization },
 	} = req;
-
 	if (authorization && authorization.split(' ')[0] === 'Token') {
 		return authorization.split(' ')[1];
 	}

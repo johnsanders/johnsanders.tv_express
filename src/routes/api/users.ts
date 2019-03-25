@@ -5,10 +5,8 @@ import User from '../../models/User';
 
 const router = express.Router();
 
-router.post('/register', auth.optional, async (req, res, next) => {
-	const {
-		body: { user },
-	} = req;
+router.post('/register', auth.optional, async (req, res) => {
+	const { user } = req.body;
 	if (!user.email) {
 		return res.status(422).json({
 			errors: {
@@ -26,14 +24,11 @@ router.post('/register', auth.optional, async (req, res, next) => {
 	const finalUser = new User(user);
 	finalUser.setPassword(user.password);
 	try {
-		const a = await finalUser.save();
-		console.log('fds', a);
 		res.json({ user: finalUser.toAuthJson() });
 	} catch (e) {
 		console.error(e);
 	}
 });
-
 router.post('/login', auth.optional, (req, res, next) => {
 	const {
 		body: { user },
@@ -64,7 +59,7 @@ router.post('/login', auth.optional, (req, res, next) => {
 		return res.status(400).json(info);
 	})(req, res, next);
 });
-router.get('/current', auth.required, (req, res, next) => {
+router.get('/current', auth.required, (req, res) => {
 	const { id } = req.query;
 	return User.findById(id).then(user => {
 		if (!user) {
