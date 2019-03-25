@@ -1,22 +1,26 @@
-import mongoose from 'mongoose';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
+import User from '../models/User';
 
-const initPassport = () => {
-	const Users = mongoose.model('Users');
-
-	passport.use(new LocalStrategy({
-		usernameField: 'user[email]',
-		passwordField: 'user[password]',
-	}, (email, password, done) => {
-		Users.findOne({ email  })
-			.then((user) => {
-				if(!user || !user.validatePassword(password)) {
-					return done(null, false, { errors: { 'email or password': 'is invalid'  }  });
-				}
-				return done(null, user);
-			}).catch(done);
-	}));
+const initPassport = (): void => {
+	passport.use(
+		new LocalStrategy.Strategy(
+			{
+				usernameField: 'user[email]',
+				passwordField: 'user[password]',
+			},
+			(email: string, password: string, done) => {
+				User.findOne({ email })
+					.then(user => {
+						if (!user || !user.validatePassword(password)) {
+							return done(null, false, { message: 'Email or password is invalid' });
+						}
+						return done(null, user);
+					})
+					.catch(done);
+			},
+		),
+	);
 };
 
 export default initPassport;

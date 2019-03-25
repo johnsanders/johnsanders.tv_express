@@ -6,7 +6,6 @@ module.exports = {
 	},
 	extends: [
 		'plugin:@typescript-eslint/recommended',
-		'plugin:react/recommended',
 		'plugin:prettier/recommended',
 		'prettier/@typescript-eslint',
 	],
@@ -27,9 +26,6 @@ module.exports = {
 			node: {
 				extensions: ['.js', '.jsx', '.ts', '.tsx'],
 			},
-		},
-		react: {
-			version: 'detect',
 		},
 	},
 };
