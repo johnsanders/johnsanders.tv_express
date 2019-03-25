@@ -58,15 +58,14 @@ router.post('/login', auth.optional, (req, res, next) => {
 		}
 		if (passportUser) {
 			const user = passportUser;
-			user.token = passportUser.generateJWT();
-			return res.json({ user: user.toAuthJSON() });
+			user.token = passportUser.generateJwt();
+			return res.json({ user: user.toAuthJson() });
 		}
 		return res.status(400).json(info);
 	})(req, res, next);
 });
 router.get('/current', auth.required, (req, res, next) => {
 	const { id } = req.query;
-	console.log(id);
 	return User.findById(id).then(user => {
 		if (!user) {
 			return res.sendStatus(400);

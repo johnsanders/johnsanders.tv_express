@@ -44,7 +44,6 @@ UserSchema.methods.generateJwt = function() {
 	const today = new Date();
 	const expirationDate = new Date(today);
 	expirationDate.setDate(today.getDate() + 60);
-
 	return jwt.sign(
 		{
 			email: this.email,
